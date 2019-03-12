@@ -2,12 +2,14 @@ package com.parfitt.template.entity;
 
 import lombok.Data;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,6 +22,7 @@ public class Template {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private ChannelType channelType;
+    @ElementCollection
+    private Set<ChannelType> channelType;
 
 }
