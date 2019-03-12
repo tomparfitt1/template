@@ -3,7 +3,7 @@ package com.parfitt.template.service;
 import com.parfitt.template.entity.ChannelType;
 import com.parfitt.template.entity.Template;
 import com.parfitt.template.entity.exception.TemplateNotFoundException;
-import com.parfitt.template.entity.exception.UncompatibleTemplateException;
+import com.parfitt.template.entity.exception.IncompatibleTemplateException;
 import com.parfitt.template.repository.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class TemplateService {
         if (template.getChannelTypes().contains(channelType)) {
             return template;
         } else {
-            throw new UncompatibleTemplateException();
+            throw new IncompatibleTemplateException();
         }
     }
 }

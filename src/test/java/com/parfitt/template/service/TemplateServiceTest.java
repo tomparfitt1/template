@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 
 import com.parfitt.template.entity.Template;
 import com.parfitt.template.entity.exception.TemplateNotFoundException;
-import com.parfitt.template.entity.exception.UncompatibleTemplateException;
+import com.parfitt.template.entity.exception.IncompatibleTemplateException;
 import com.parfitt.template.repository.TemplateRepository;
 import java.util.Optional;
 import org.junit.Before;
@@ -74,7 +74,7 @@ public class TemplateServiceTest {
         given(templateRepository.findById(anyLong())).willReturn(Optional.of(template));
 
         // When
-        assertThatExceptionOfType(UncompatibleTemplateException.class)
+        assertThatExceptionOfType(IncompatibleTemplateException.class)
                 .isThrownBy(() -> templateService.getTemplate(1L, EMAIL))
                 .withNoCause();
 
