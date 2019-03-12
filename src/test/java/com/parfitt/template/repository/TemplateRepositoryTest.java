@@ -62,24 +62,6 @@ public class TemplateRepositoryTest {
     }
 
     @Test
-    public void create_withInvalidEntity_returns201() throws Exception {
-        // Given
-        ObjectMapper mapper = new ObjectMapper();
-        template.setContent("");
-        String json = mapper.writeValueAsString(template);
-
-        // When
-        ResultActions perform = this.mvc.perform(
-                post("/template")
-                        .contentType(APPLICATION_JSON)
-                        .content(json));
-
-        // Then
-        perform.andExpect(status().isCreated())
-                .andExpect(content().string(""));
-    }
-
-    @Test
     public void read_withValidId_returns204() throws Exception {
         // Given
         Template savedTemplate = repository.save(template);
