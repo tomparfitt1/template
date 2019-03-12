@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Optional;
 
 import static com.parfitt.template.entity.ChannelType.SMS;
+import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -41,7 +42,7 @@ public class TemplateRepositoryTest {
     public void setup() {
         template = new Template();
         template.setContent("dummy content");
-        template.setChannelType(SMS);
+        template.setChannelTypes(singleton(SMS));
     }
 
     @Test

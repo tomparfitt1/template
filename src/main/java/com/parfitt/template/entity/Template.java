@@ -23,6 +23,6 @@ public class Template {
 
     @Enumerated(EnumType.STRING)
     @ElementCollection
-    private Set<ChannelType> channelType;
+    private Set<ChannelType> channelTypes;
 
 }
