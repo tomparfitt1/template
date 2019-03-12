@@ -20,6 +20,6 @@ public class Template {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private Channel channel;
+    private ChannelType channelType;
 
 }

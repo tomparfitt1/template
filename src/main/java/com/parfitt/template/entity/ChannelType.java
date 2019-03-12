@@ -1,6 +1,6 @@
 package com.parfitt.template.entity;
 
-public enum Channel {
+public enum ChannelType {
     SMS,
     EMAIL,
     PUSH
