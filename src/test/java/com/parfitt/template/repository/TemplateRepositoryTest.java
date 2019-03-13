@@ -15,7 +15,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Optional;
 
 import static com.parfitt.template.entity.ChannelType.SMS;
+import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
+import static javassist.CtMethod.ConstParameter.string;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -60,6 +62,46 @@ public class TemplateRepositoryTest {
         // Then
         perform.andExpect(status().isCreated())
                 .andExpect(content().string(""));
+    }
+
+    @Test
+    public void create_withMissingChannel_returns400() throws Exception {
+        // Given
+        ObjectMapper mapper = new ObjectMapper();
+        template.setChannelTypes(emptySet());
+        String json = mapper.writeValueAsString(template);
+
+        // When
+        ResultActions perform = this.mvc.perform(
+                post("/template")
+                        .contentType(APPLICATION_JSON)
+                        .content(json));
+
+        // Then
+        String expectedResponseContent = "{\"errors\":[{\"entity\":\"Template\",\"property\":\"channelTypes\","
+                + "\"invalidValue\":[],\"message\":\"\\\"Channel type must not be empty\\\"\"}]}";
+        perform.andExpect(status().isBadRequest())
+                .andExpect(content().string(expectedResponseContent));
+    }
+
+    @Test
+    public void create_withMissingContent_returns400() throws Exception {
+        // Given
+        ObjectMapper mapper = new ObjectMapper();
+        template.setContent("");
+        String json = mapper.writeValueAsString(template);
+
+        // When
+        ResultActions perform = this.mvc.perform(
+                post("/template")
+                        .contentType(APPLICATION_JSON)
+                        .content(json));
+
+        // Then
+        String expectedResponseContent = "{\"errors\":[{\"entity\":\"Template\",\"property\":\"content\","
+                + "\"invalidValue\":\"\",\"message\":\"\\\"Content must not be empty\\\"\"}]}";
+        perform.andExpect(status().isBadRequest())
+                .andExpect(content().string(expectedResponseContent));
     }
 
     @Test

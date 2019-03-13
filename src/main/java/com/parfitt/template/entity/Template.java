@@ -1,7 +1,6 @@
 package com.parfitt.template.entity;
 
-import lombok.Data;
-
+import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Set;
+import lombok.Data;
 
 @Data
 @Entity
