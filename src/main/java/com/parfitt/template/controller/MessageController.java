@@ -2,6 +2,7 @@ package com.parfitt.template.controller;
 
 import com.parfitt.template.entity.MessageRequest;
 import com.parfitt.template.service.MessageService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity send(@RequestBody MessageRequest request) {
+    public ResponseEntity send(@Valid @RequestBody MessageRequest request) {
 
         messageService.send(request.getTemplate(), request.getChannel(), request.getContent());
 

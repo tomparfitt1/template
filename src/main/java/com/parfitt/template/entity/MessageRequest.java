@@ -1,6 +1,7 @@
 package com.parfitt.template.entity;
 
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MessageRequest {
 
-    private long template;
+    @NotNull
+    private Long template;
+
+    @NotNull
     private ChannelType channel;
+
     private Map<String, Object> content;
 
 }

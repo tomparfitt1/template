@@ -3,7 +3,7 @@ package com.parfitt.template.entity.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "template incompatible with channel type")
 public class IncompatibleTemplateException extends RuntimeException {
 
 }

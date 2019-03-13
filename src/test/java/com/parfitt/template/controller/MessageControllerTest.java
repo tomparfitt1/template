@@ -1,6 +1,7 @@
 package com.parfitt.template.controller;
 
 import static com.parfitt.template.entity.ChannelType.SMS;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -9,6 +10,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +38,7 @@ public class MessageControllerTest {
     private MessageService messageService;
 
     @Test
-    public void poxtMessage_withValidBody_returns204() throws Exception {
+    public void postMessage_withValidBody_returns204() throws Exception {
         // Given
         long templateId = 1L;
         ChannelType channelType = SMS;
@@ -52,6 +54,30 @@ public class MessageControllerTest {
         // Then
         perform.andExpect(status().isNoContent());
         then(messageService).should().send(templateId, channelType, content);
+    }
+
+    @Test
+    public void postMessage_withMissingChannelType_returns400() throws Exception {
+        // Given
+        String json = "{\"template\":1,\"content\":{\"name\":\"Bob\"}}";
+
+        // When
+        ResultActions perform = this.mockMvc.perform(post("/message").contentType(APPLICATION_JSON).content(json));
+
+        // Then
+        perform.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postMessage_withMissingTemplate_returns400() throws Exception {
+        // Given
+        String json = "{\"channel\":\"SMS\",\"content\":{\"name\":\"Bob\"}}";
+
+        // When
+        ResultActions perform = this.mockMvc.perform(post("/message").contentType(APPLICATION_JSON).content(json));
+
+        // Then
+        perform.andExpect(status().isBadRequest());
     }
 
 }
